@@ -81,7 +81,7 @@ a2a_openai_agent/
 ### 1. Clone and navigate to the repo
 
 ```bash
-git clone https://github.com/muhammadabdullah95/a2a-openai-agent.git
+git clone https://github.com/MuhammadAbdullah95/a2a-openai-agent.git
 cd a2a_openai_agent
 ```
 
