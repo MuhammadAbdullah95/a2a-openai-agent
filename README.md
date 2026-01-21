@@ -1,8 +1,12 @@
-# 🤖 TellTimeAgent - A2A Agent Using OpenAI Agents SDK
+# A2A Protocol Examples with OpenAI Agents SDK
 
-## 🌐 What is A2A (Agent-to-Agent) Protocol?
+A comprehensive collection of **Agent2Agent (A2A) Protocol** implementations using the [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/). This repository demonstrates how to build interoperable AI agents that communicate via the A2A standard.
 
-The **Agent2Agent (A2A) Protocol** is an **open protocol** that enables communication and interoperability between AI agents built on different frameworks by different companies. It was initiated by **Google** and is now maintained as an open-source project under the **Linux Foundation**.
+---
+
+## What is A2A (Agent-to-Agent) Protocol?
+
+The **Agent2Agent (A2A) Protocol** is an open protocol that enables communication and interoperability between AI agents built on different frameworks by different companies. It was initiated by **Google** and is now maintained as an open-source project under the **Linux Foundation**.
 
 ### Why A2A?
 
@@ -23,176 +27,132 @@ As AI agents become more prevalent, their ability to interoperate is crucial for
 | **Rich Data Exchange** | Handles text, files, and structured JSON data |
 | **Enterprise-Ready** | Designed with security, authentication, and observability in mind |
 
-### 📚 Official Resources
-
-| Resource | Link |
-|----------|------|
-| 🌐 Official Documentation | [a2a-protocol.org](https://a2a-protocol.org) |
-| 📝 Protocol Specification | [A2A Protocol Specification](https://a2a-protocol.org/latest/specification/) |
-| 🐙 GitHub Repository | [github.com/a2aproject/A2A](https://github.com/a2aproject/A2A) |
-| 🐍 Python SDK | [a2a-python](https://github.com/a2aproject/a2a-python) - `pip install a2a-sdk` |
-| 🎬 Official Samples | [a2a-samples](https://github.com/a2aproject/a2a-samples) |
-
 ---
 
-## 📦 Project Structure
+## Repository Structure
 
-```bash
-a2a_openai_agent/
-├── .env                       # API key goes here (not committed)
-├── pyproject.toml            # Dependency config (used with uv or pip)
-├── README.md                 # You're reading it!
-├── app/
-│   └── cmd/
-│       └── cmd.py            # Command-line app to talk to the agent
-├── my_agents/
-│   └── openai_sdk/
-│       ├── __main__.py       # Starts the agent + A2A server
-│       ├── agent.py          # OpenAI agent definition using Agents SDK
-│       └── task_manager.py   # Handles task lifecycle
-├── server/
-│   ├── server.py             # A2A server logic (routes, JSON-RPC)
-│   └── task_manager.py       # In-memory task storage + interface
-├── client/
-│   └── client.py             # A2A client for sending requests
-└── models/
-    ├── agent.py              # AgentCard, AgentSkill, AgentCapabilities
-    ├── json_rpc.py           # JSON-RPC request/response formats
-    ├── request.py            # SendTaskRequest, A2ARequest union
-    └── task.py               # Task structure, messages, status
+```
+a2a-openai-agent/
+├── README.md                 # This file
+├── a2a_single_agent/         # Single agent example
+│   ├── README.md             # Single agent documentation
+│   ├── pyproject.toml        # Dependencies
+│   ├── app/cmd/              # CLI client
+│   ├── my_agents/openai_sdk/ # TellTimeAgent implementation
+│   ├── server/               # A2A server
+│   ├── client/               # A2A client
+│   └── models/               # Data models
+│
+└── a2a_multi_agent/          # Multi-agent example
+    ├── README.md             # Multi-agent documentation
+    ├── pyproject.toml        # Dependencies
+    ├── app/cmd/              # CLI client
+    ├── a2a_agents/           # Three collaborating agents
+    │   ├── tell_time_agent/  # Returns current time
+    │   ├── greeting_agent/   # Generates poetic greetings
+    │   └── host_agent/       # Orchestrator that routes requests
+    ├── server/               # A2A server
+    ├── client/               # A2A client
+    ├── models/               # Data models
+    └── utilities/            # Agent discovery utilities
 ```
 
 ---
 
-## 🚀 Features
+## Examples Overview
 
-✅ OpenAI-powered A2A agent using Agents SDK  
-✅ Follows JSON-RPC 2.0 specification  
-✅ Supports session handling  
-✅ Custom A2A server implementation (non-streaming)  
-✅ CLI to interact with agent  
-✅ Function tools support  
-✅ Fully commented and beginner-friendly
+### 1. Single Agent (`a2a_single_agent/`)
+
+A minimal A2A implementation with one agent:
+
+| Component | Description |
+|-----------|-------------|
+| **TellTimeAgent** | Responds to time-related queries using the `get_current_time` tool |
+
+**Use Case**: Learn the basics of A2A protocol, agent cards, JSON-RPC communication, and task lifecycle.
+
+[View Single Agent README](a2a_single_agent/README.md)
 
 ---
 
-## 💠 Setup
+### 2. Multi-Agent (`a2a_multi_agent/`)
 
-### 1. Clone and navigate to the repo
+A more advanced implementation with three collaborating agents:
+
+| Agent | Port | Description |
+|-------|------|-------------|
+| **TellTimeAgent** | 10000 | Returns the current system time |
+| **GreetingAgent** | 10001 | Fetches time and generates poetic greetings |
+| **OrchestratorAgent** | 10002 | Routes requests to the appropriate child agent |
+
+**Use Case**: Learn agent discovery, delegation, orchestration, and multi-agent collaboration.
+
+[View Multi-Agent README](a2a_multi_agent/README.md)
+
+---
+
+## Quick Start
+
+### Prerequisites
+
+- Python 3.11+
+- OpenAI API key
+- [uv](https://github.com/astral-sh/uv) (recommended) or pip
+
+### Clone the Repository
 
 ```bash
 git clone https://github.com/MuhammadAbdullah95/a2a-openai-agent.git
-cd a2a_openai_agent
+cd a2a-openai-agent
 ```
 
-### 2. Setup with `uv` (Recommended)
-
-[uv](https://github.com/astral-sh/uv) is a fast Python package manager. Install it first:
+### Run the Single Agent Example
 
 ```bash
-# On macOS/Linux
-curl -LsSf https://astral.sh/uv/install.sh | sh
+cd a2a_single_agent
 
-# On Windows (PowerShell)
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
-
-Then create a virtual environment and install dependencies:
-
-```bash
-# Create virtual environment
-uv venv
-
-# Activate it
-# On macOS/Linux:
-source .venv/bin/activate
-# On Windows:
-.venv\Scripts\activate
-
-# Install dependencies
+# Setup environment
+uv venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
 uv pip install -e .
-```
 
-### Alternative: Setup with `pip`
+# Add your API key
+echo "OPENAI_API_KEY=your_key_here" > .env
 
-```bash
-# Create virtual environment
-python3 -m venv .venv
-
-# Activate it
-# On macOS/Linux:
-source .venv/bin/activate
-# On Windows:
-.venv\Scripts\activate
-
-# Install dependencies
-pip install -e .
-```
-
----
-
-## 🔑 API Key Setup
-
-Create a `.env` file in the root directory:
-
-```bash
-touch .env
-```
-
-And add your OpenAI API key:
-
-```env
-OPENAI_API_KEY=your_api_key_here
-```
-
----
-
-## ▶️ Running the Agent
-
-In one terminal window:
-
-```bash
+# Terminal 1: Start the agent
 python -m my_agents.openai_sdk
-```
 
-You should see:
-
-```
-Uvicorn running on http://localhost:10002
-```
-
----
-
-## 🧑‍💻 Running the Client
-
-Open a **second terminal window**:
-
-```bash
+# Terminal 2: Run the client
 python -m app.cmd.cmd --agent http://localhost:10002
 ```
 
-You can now type messages like:
+### Run the Multi-Agent Example
 
 ```bash
-what time is it?
+cd a2a_multi_agent
+
+# Setup environment
+uv venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
+uv pip install -e .
+
+# Add your API key
+echo "OPENAI_API_KEY=your_key_here" > .env
+
+# Terminal 1: TellTimeAgent
+python -m a2a_agents.tell_time_agent --host localhost --port 10000
+
+# Terminal 2: GreetingAgent
+python -m a2a_agents.greeting_agent --host localhost --port 10001
+
+# Terminal 3: OrchestratorAgent
+python -m a2a_agents.host_agent.entry --host localhost --port 10002
+
+# Terminal 4: Client
+python -m app.cmd.cmd --agent http://localhost:10002
 ```
 
-And get an OpenAI-powered response!
-
 ---
 
-## 🔍 Agent Workflow (A2A Lifecycle)
-
-1. The client queries the agent using a CLI (`cmd.py`)
-2. The A2A client sends a task using JSON-RPC to the A2A server
-3. The server parses the request, invokes the task manager
-4. The task manager calls the OpenAI-powered `TellTimeAgent`
-5. The agent uses the `get_current_time` tool to get the system time
-6. The server wraps the response and sends it back to the client
-
----
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **OpenAI Agents SDK** - Agent orchestration and tool calling
 - **Starlette** - Lightweight ASGI web framework
@@ -202,19 +162,38 @@ And get an OpenAI-powered response!
 
 ---
 
-## 🙌 Acknowledgements
+## A2A Protocol Resources
+
+| Resource | Link |
+|----------|------|
+| Official Documentation | [a2a-protocol.org](https://a2a-protocol.org) |
+| Protocol Specification | [A2A Specification](https://a2a-protocol.org/latest/specification/) |
+| GitHub Repository | [github.com/a2aproject/A2A](https://github.com/a2aproject/A2A) |
+| Python SDK | [a2a-python](https://github.com/a2aproject/a2a-python) - `pip install a2a-sdk` |
+| Official Samples | [a2a-samples](https://github.com/a2aproject/a2a-samples) |
+
+---
+
+## Acknowledgements
 
 - [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/)
 - [OpenAI API](https://platform.openai.com/)
+- [A2A Protocol](https://a2a-protocol.org)
 - [Starlette](https://www.starlette.io/)
 - [Uvicorn](https://www.uvicorn.org/)
 
 ---
 
-## 🌐 Connect with Me
+## Connect with Me
 
-- [Linkedin: Muhammad Abdullah](https://www.linkedin.com/in/muhammad-abdullah-3a8550255/)
+- LinkedIn: [Muhammad Abdullah](https://www.linkedin.com/in/muhammad-abdullah-3a8550255/)
 - Facebook: [Muhammad Abdullah](https://www.facebook.com/muhammad.abdullah.332635)
 - GitHub: [Muhammad Abdullah](https://github.com/MuhammadAbdullah95)
+
+---
+
+## License
+
+This project is open source and available for educational purposes.
 
 ---
