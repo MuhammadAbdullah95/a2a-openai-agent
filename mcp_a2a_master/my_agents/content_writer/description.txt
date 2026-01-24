@@ -1,0 +1,1 @@
+A content writing agent that generates blog posts, articles, marketing copy, and other written content. Can save generated content to files.

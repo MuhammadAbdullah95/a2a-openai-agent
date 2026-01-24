@@ -1,0 +1,28 @@
+{
+  "mcpServers": {
+    "terminal_server": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "mcp/servers/terminal_server",
+        "run",
+        "terminal_server.py"
+      ]
+    },
+    "arithmetic_server": {
+      "command": "streamable_http",
+      "args": [
+        "http://localhost:3000/mcp/"
+      ]
+    },
+    "filesystem_server": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "mcp/servers/filesystem_server",
+        "run",
+        "filesystem_server.py"
+      ]
+    }
+  }
+}
